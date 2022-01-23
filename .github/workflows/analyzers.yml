@@ -51,14 +51,17 @@ jobs:
         cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.config }}
    
     - name: Compile Dependencies
+      if: ${{ matrix.tool == 'CodeQL' }}
       run: |
         cmake --build build --parallel --config ${{ matrix.config }} --target osp-magnum-deps
         
     - name: Compile OSP-Magnum
+      if: ${{ matrix.tool == 'CodeQL' }}
       run: |
         cmake --build build --parallel --config ${{ matrix.config }} --target osp-magnum
         
     - name: Compile Unit Tests
+      if: ${{ matrix.tool == 'CodeQL' }}
       run: |
         cmake --build build --parallel --config ${{ matrix.config }} --target test
 
