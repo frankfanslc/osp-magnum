@@ -28,6 +28,8 @@ jobs:
         config: [Release, Debug]
         
     env:
+      CC: gcc
+      CXX: g++
       CMAKE_C_COMPILER_LAUNCHER: ccache
       CMAKE_CXX_COMPILER_LAUNCHER: ccache
 
@@ -38,8 +40,9 @@ jobs:
         submodules: recursive
         
     - uses: hendrikmuhs/ccache-action@v1
+      if: ${{ matrix.tool == 'CodeQL' }}
       with:
-        key: linux-${{ matrix.compiler }}-${{ matrix.config }}
+        key: linux-gcc-${{ matrix.config }}
 
     - name: Install dependencies
       run: |
@@ -56,7 +59,7 @@ jobs:
 
     - name: Configure
       run: |
-        cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.config }}
+        cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.config }} -DCMAKE_LINK_WHAT_YOU_USE=TRUE
    
     - name: Compile Dependencies
       if: ${{ matrix.tool == 'CodeQL' }}
