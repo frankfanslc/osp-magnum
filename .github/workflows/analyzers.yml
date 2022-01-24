@@ -40,7 +40,6 @@ jobs:
         submodules: recursive
         
     - uses: hendrikmuhs/ccache-action@v1
-      if: ${{ matrix.tool == 'CodeQL' }}
       with:
         key: linux-gcc-${{ matrix.config }}
 
