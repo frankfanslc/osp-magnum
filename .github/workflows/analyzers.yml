@@ -30,18 +30,12 @@ jobs:
     env:
       CC: gcc
       CXX: g++
-      CMAKE_C_COMPILER_LAUNCHER: ccache
-      CMAKE_CXX_COMPILER_LAUNCHER: ccache
 
     steps:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 1
         submodules: recursive
-        
-    - uses: hendrikmuhs/ccache-action@v1
-      with:
-        key: linux-gcc-${{ matrix.config }}
 
     - name: Install dependencies
       run: |
